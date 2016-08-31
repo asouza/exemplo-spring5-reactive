@@ -1,6 +1,4 @@
-#Some setup information :).
+#Exemplo usando um pouco de Reactive Programming
 
-##Spring JPA Setup
-You need to change the **application.properties** and configure the login, password and url of your database. 
-  	
+A ideia desse projeto é mostrar um pouco do que, talvez, você vai precisar fazer para usar a versão 5 do Spring. Tudo que fazemos hoje vai continuar funcionando, mas vai ser muito mais legal se o projeto usufruir das novas funcionalidades.
 
