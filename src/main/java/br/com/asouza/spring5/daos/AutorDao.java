@@ -1,18 +1,25 @@
 package br.com.asouza.spring5.daos;
 
-import java.util.concurrent.CompletableFuture;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import br.com.asouza.spring5.models.Autor;
 
 @Repository
-public interface AutorDao extends CrudRepository<Autor, Integer>{
+public class AutorDao {
+	
+	@Autowired
+	private EntityManager manager;
 
-	@Async
-	@Query("select a from Autor a")
-	public CompletableFuture<Iterable<Autor>> listAll();
+	public Flux<Autor> listaTodos(){		
+		Mono<Query> query = Mono.fromSupplier(() -> manager.createQuery("select a from Autor a"));
+		Flux<Autor> list = query.flatMap((q) -> Flux.fromIterable(q.getResultList()));
+		return list;
+		
+	}
 }
