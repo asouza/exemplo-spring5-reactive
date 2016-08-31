@@ -1,12 +1,12 @@
 package br.com.asouza.spring5.daos;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import br.com.asouza.spring5.models.Autor;
 
@@ -16,10 +16,9 @@ public class AutorDao {
 	@Autowired
 	private EntityManager manager;
 
-	public Flux<Autor> listaTodos(){		
-		Mono<Query> query = Mono.fromSupplier(() -> manager.createQuery("select a from Autor a"));
-		Flux<Autor> list = query.flatMap((q) -> Flux.fromIterable(q.getResultList()));
-		return list;
+	public Mono<List<Autor>> listaTodos(){		
+		Mono<List<Autor>> query = Mono.fromSupplier(() -> manager.createQuery("select a from Autor a").getResultList());
+		return query;
 		
 	}
 }
